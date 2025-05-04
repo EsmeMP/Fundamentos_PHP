@@ -1,0 +1,3 @@
+# Fundamentos_PHP
+## Repositorio que muestra apuntes que se van recabando durante el aprendizaje de este lenguaje
+## PHP es un lenguaje de tipado dinámico, muy ocupado en aplicaciones web...  
