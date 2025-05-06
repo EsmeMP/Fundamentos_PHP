@@ -1,0 +1,6 @@
+{
+    "Mascotas":[
+        {"name":"Galletas", "type": "Gato"},
+        {"name":"Mailo", "type": "Perro"}
+    ]
+}
