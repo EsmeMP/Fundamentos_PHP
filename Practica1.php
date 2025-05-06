@@ -2,30 +2,44 @@
     // $json ='{"Galletas":"Gato", "Mailo":"Perro"}';
     // var_dump(json_decode($json));
 
-    //Sirve para obtener la ruta del archivo
+    // //Sirve para obtener la ruta del archivo
+    // $conexion = file_get_contents("../PHP/datos.json");
+    // $mascotas = json_decode($conexion, true);
+
+    // //Imprimir los datos
+    // foreach($mascotas as $mascota){
+    //     print_r($mascota);
+    // }
+
+
+// class Pets{    
+//     public static $conexion = file_get_contents("../PHP/datos.json");
+//     public static $pets = json_decode($conexion, true);
+//     //Metodos
+//     public function get_data($pets){
+//         foreach($pets as $pet){
+//             print_r($pet);
+//         }
+//     }
+//     function set_data(){
+
+//     }
+
+// }
+
     $conexion = file_get_contents("../PHP/datos.json");
-    $mascotas = json_decode($conexion, true);
-
-    //Imprimir los datos
-    foreach($mascotas as $mascota){
-        print_r($mascota);
+    
+    $pets = json_decode($conexion, true);
+    // $obj = json_decode($pets);
+    foreach($pets as $pet){
+        print_r($pet);
     }
 
+    $pets["name"]= "gato";
+    $pets["type"]= "gato";
+    $jsonActualizado = json_encode($pets);
+    echo $jsonActualizado;
 
-class Mascota{
-    //Propiedades
-    public $name;
-    public $type;
-    //Metodos
-    function set_name($name){
-        $this->name =$name;
-    }
-    function get_name(){
-        return $this->name;
-    }
-}
-$cat = new Mascota();
-$cat->set_name('Gatito');
-echo $cat->get_name();
+
 
 ?>
