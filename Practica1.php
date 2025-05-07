@@ -11,11 +11,66 @@
     //     print_r($mascota);
     // }
 
+    // $json = '{"Name":"Galletas", "Type":"Gato"}';
+    
+    // $pets = json_decode($json, true);
+    // foreach($pets as $key => $value){
+    //     echo $key . "=>" . $value. "\n";
+    // }
+    
+    class Pets{    
+        public $name;
+        public $type;
+        
+        function __construct($name, $type)
+        {
+            $this->name = $name;
+            $this->type = $type;
+        }
+        
+        function get_name(){
+            return $this->name . "\n";
+        }
+        function get_type(){
+            return $this->type . "\n";
+        }
+        
+}   
+$pet1 = new Pets("Galletas", "Gato");
+echo $pet1->get_name();
+echo $pet1->get_type();
+$pet2 = new Pets("Mailo", "Perro");
+
+
+$arreglo = [];
+    foreach($pet1 as $key => &$value){
+        $arreglo[$key] = $value;
+        // var_dump($arreglo);
+        // print_r(json_encode($arreglo));
+
+        $jsonActualizado = json_encode($arreglo);
+        file_put_contents("../PHP/datos.json", $jsonActualizado);
+    }
+
+
 
 //     class Pets{    
 //         public $name;
-//         public $color;
+//         public $type;
         
+//         public function __construct($name, $type)
+//         {
+//             $this->name = $name;
+//             $this->type = $type;
+//         }
+        
+//         function get_name(){
+//             $conexion = file_get_contents("../PHP/datos.json");
+//             $pets = json_decode($conexion, true);
+//             echo $pets ["name"];
+//         }
+
+
 //         function get_pets(){
 //             $conexion = file_get_contents("../PHP/datos.json");
 //             $pets = json_decode($conexion, true);
@@ -23,6 +78,7 @@
 //                 return($pet);
 //             }
 //         }
+
 //         function set_pets(){
 //             $pets["name"]= "gato";
 //             $pets["type"]= "gato";
@@ -33,31 +89,7 @@
         
 // }
 
-    // GET
-    $conexion = file_get_contents("../PHP/datos.json");
-    
-    $pets = json_decode($conexion, true);
-    // foreach($pets as $key => $value){
-    //     echo $key . " => " . $value; 
-    // }
-    foreach($pets as $pet){
-        print_r($pet);
-    }
-    // $obj = json_decode($pets);
-    echo $pets["Galletas"];
-    echo $pets->Galletas;
 
-    //SET
-
-    $array [] = array(
-        "name" => "manchas",
-        "type" => "gato"
-    );
-    $pets =array_merge($pets, $array);
-    
-    $jsonActualizado = json_encode($pets);
-    file_put_contents("../PHP/datos.json", $jsonActualizado);
-    echo $jsonActualizado;
 
     
 
