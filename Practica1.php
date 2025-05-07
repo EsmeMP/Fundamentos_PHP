@@ -12,34 +12,54 @@
     // }
 
 
-// class Pets{    
-//     public static $conexion = file_get_contents("../PHP/datos.json");
-//     public static $pets = json_decode($conexion, true);
-//     //Metodos
-//     public function get_data($pets){
-//         foreach($pets as $pet){
-//             print_r($pet);
+//     class Pets{    
+//         public $name;
+//         public $color;
+        
+//         function get_pets(){
+//             $conexion = file_get_contents("../PHP/datos.json");
+//             $pets = json_decode($conexion, true);
+//             foreach($pets as $pet){
+//                 return($pet);
+//             }
 //         }
-//     }
-//     function set_data(){
-
-//     }
-
+//         function set_pets(){
+//             $pets["name"]= "gato";
+//             $pets["type"]= "gato";
+//             $jsonActualizado = json_encode($pets);
+//             file_put_contents("../PHP/datos.json", $jsonActualizado);
+//             echo $jsonActualizado; 
+//         }
+        
 // }
 
+    // GET
     $conexion = file_get_contents("../PHP/datos.json");
     
     $pets = json_decode($conexion, true);
-    // $obj = json_decode($pets);
+    // foreach($pets as $key => $value){
+    //     echo $key . " => " . $value; 
+    // }
     foreach($pets as $pet){
         print_r($pet);
     }
+    // $obj = json_decode($pets);
+    echo $pets["Galletas"];
+    echo $pets->Galletas;
 
-    $pets["name"]= "gato";
-    $pets["type"]= "gato";
+    //SET
+
+    $array [] = array(
+        "name" => "manchas",
+        "type" => "gato"
+    );
+    $pets =array_merge($pets, $array);
+    
     $jsonActualizado = json_encode($pets);
+    file_put_contents("../PHP/datos.json", $jsonActualizado);
     echo $jsonActualizado;
 
+    
 
 
 ?>

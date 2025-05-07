@@ -1,6 +1,14 @@
-{
-    "Pets":[
-        {"name":"Galletas", "type": "Gato"},
-        {"name":"Mailo", "type": "Perro"}
-    ]
-}
+[
+    {
+        "name":"Galletas",
+        "type":"Gato"
+    },
+    {
+        "name":"Mailo",
+        "type":"Perro"
+    },
+    {
+        "name":"gato",
+        "type":"gatito"
+    }
+]
