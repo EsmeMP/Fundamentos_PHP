@@ -21,7 +21,8 @@
     class Pets{    
         public $name;
         public $type;
-        
+
+
         function __construct($name, $type)
         {
             $this->name = $name;
@@ -33,65 +34,44 @@
         }
         function get_type(){
             return $this->type . "\n";
-        }
+        } 
         
+        
+
+        function set($nombre, $raza){
+           // return $this->type . "\n";
+           // Se requiere retorna 
+        } 
 }   
+        
 $pet1 = new Pets("Galletas", "Gato");
 echo $pet1->get_name();
 echo $pet1->get_type();
 $pet2 = new Pets("Mailo", "Perro");
 
-
-$arreglo = [];
-    foreach($pet1 as $key => &$value){
-        $arreglo[$key] = $value;
-        // var_dump($arreglo);
-        // print_r(json_encode($arreglo));
-
-        $jsonActualizado = json_encode($arreglo);
-        file_put_contents("../PHP/datos.json", $jsonActualizado);
-    }
+function petArray($pet){
+    return[
+        "name" => $pet->name,
+        "type" => $pet->type
+    ];
+}
+$conexion = "../PHP/datos.json";
 
 
+//Crear conexion de sql
 
-//     class Pets{    
-//         public $name;
-//         public $type;
-        
-//         public function __construct($name, $type)
-//         {
-//             $this->name = $name;
-//             $this->type = $type;
-//         }
-        
-//         function get_name(){
-//             $conexion = file_get_contents("../PHP/datos.json");
-//             $pets = json_decode($conexion, true);
-//             echo $pets ["name"];
-//         }
+if(file_exists($conexion)){
+    $contenido = file_get_contents($conexion);
+    $arreglo = json_decode($contenido, true);
+}
+else{
+    $arreglo = [];
+}
 
-
-//         function get_pets(){
-//             $conexion = file_get_contents("../PHP/datos.json");
-//             $pets = json_decode($conexion, true);
-//             foreach($pets as $pet){
-//                 return($pet);
-//             }
-//         }
-
-//         function set_pets(){
-//             $pets["name"]= "gato";
-//             $pets["type"]= "gato";
-//             $jsonActualizado = json_encode($pets);
-//             file_put_contents("../PHP/datos.json", $jsonActualizado);
-//             echo $jsonActualizado; 
-//         }
-        
-// }
-
-
-
-    
+$arreglo[] = petArray($pet2);
+$jsonActualizado = json_encode($arreglo);
+file_put_contents($conexion, $jsonActualizado);
+print_r($jsonActualizado);
 
 
 ?>
