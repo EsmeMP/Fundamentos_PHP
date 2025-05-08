@@ -18,7 +18,7 @@
     //     echo $key . "=>" . $value. "\n";
     // }
     
-    class Pets{    
+class Pets{    
         public $name;
         public $type;
 
@@ -29,18 +29,22 @@
             $this->type = $type;
         }
         
-        function get_name(){
-            return $this->name . "\n";
+        function get(){
+            // Se requiere obtener datos de la base de datos sql 
+            $response['nombre'][] = 'ok'; // ok, error
+            $response['raza'][]   = 'Se agrego correctamtente';
+            return $response; 
         }
-        function get_type(){
-            return $this->type . "\n";
-        } 
-        
-        
+
 
         function set($nombre, $raza){
            // return $this->type . "\n";
-           // Se requiere retorna 
+           // Se requiere agregar los parametros en la base de datos sql 
+           $response['status'] = 'ok'; // ok, error
+           $response['answer'] = 'Se agrego correctamtente';
+           $response['code']   = 200;
+
+           return $response;
         } 
 }   
         
