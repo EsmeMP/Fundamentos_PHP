@@ -1,8 +1,8 @@
 <?php
 class Conexion{
  function ConexionBD(){
-    $host = 'localhost';
-    $dbname = 'pets_bd';
+    $host = '127.0.0.1';
+    $dbname = 'petsBD';
     $username = 'root';
     $password = '';
     

@@ -2,70 +2,64 @@
 include_once("conexion.php");
 $conexion = new Conexion();
 $conexion->ConexionBD();
-class Pets{    
-        public $name;
-        public $type;
-        public $age;
-        public $race;
+
+// require_once 'pets.php';
+
+// $mascota = new Pets("Max", "Perro", 3, "Labrador");
+// $mascota->set();
+
+// echo "<hr><h3>Mascotas registradas:</h3>";
+// Pets::get();
+
+// -----
+require_once "conexion.php";
+require_once "pets1.php";
+
+$datos1 = [ ["name" => "Galletas"] ];
+$datos2 = [ ["type" => "Gato"], ["age" => 2], ["race" => "Siames"] ];
+
+$pet = new pets(1, $datos1, $datos2);
+$pet->set();
+
+echo "Mascotas registradas: ";
+pets::get();
 
 
-        function __construct($name, $type, $age, $race )
-        {
-            $this->name = $name;
-            $this->type = $type;
-            $this->age = $age;
-            $this->race = $race;
-        }
-        
-        function get(){
-            // Se requiere obtener datos de la base de datos sql 
-            $response['nombre'][] = 'ok'; // ok, error
-            $response['raza'][]   = 'Se agrego correctamtente';
-            return $response; 
-        }
+// class Pets{    
+//         public $name;
+//         public $type;
+//         public $age;
+//         public $race;
 
 
-        function set($nombre, $raza){
-           // return $this->type . "\n";
-           // Se requiere agregar los parametros en la base de datos sql 
-           $response['status'] = 'ok'; // ok, error
-           $response['answer'] = 'Se agrego correctamtente';
-           $response['code']   = 200;
-
-           return $response;
-        } 
-}   
-
-
-        
-// $pet1 = new Pets("Galletas", "Gato");
-// echo $pet1->get_name();
-// echo $pet1->get_type();
-// $pet2 = new Pets("Mailo", "Perro");
-
-// function petArray($pet){
-//     return[
-//         "name" => $pet->name,
-//         "type" => $pet->type
-//     ];
-// }
-// $conexion = "../PHP/datos.json";
+//         function __construct($name, $type, $age, $race )
+//         {
+//             $this->name = $name;
+//             $this->type = $type;
+//             $this->age = $age;
+//             $this->race = $race;
+//         }
+//         //imprimir en otro script
+//         // respose["clave"]["valor"]
+//         function get(){
+//             // Se requiere obtener datos de la base de datos sql 
+//             $response['nombre'][] = 'ok'; // ok, error
+//             $response['raza'][]   = 'Se agrego correctamtente';
+//             return $response; 
+//         }
 
 
-// //Crear conexion de sql
+//         function set($nombre, $raza){
+//            // return $this->type . "\n";
+//            // Se requiere agregar los parametros en la base de datos sql 
+//            $response['status'] = 'ok'; // ok, error
+//            $response['answer'] = 'Se agrego correctamtente';
+//            $response['code']   = 200;
 
-// if(file_exists($conexion)){
-//     $contenido = file_get_contents($conexion);
-//     $arreglo = json_decode($contenido, true);
-// }
-// else{
-//     $arreglo = [];
-// }
-
-// $arreglo[] = petArray($pet2);
-// $jsonActualizado = json_encode($arreglo);
-// file_put_contents($conexion, $jsonActualizado);
-// print_r($jsonActualizado);
+//            return $response;
+//         } 
+// }   
 
 
 // ?>
+
