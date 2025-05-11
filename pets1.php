@@ -2,28 +2,34 @@
 class pets{
     public $pet_id;
     public $datos;
-    public $datos2;
+    public $db;
 
-    function __construct($pet_id, $datos, $datos2,)
+    function __construct($datos_array)
     {
-        $this->name = $pet_id;
-        $this->type = $datos;
-        $this->age = $datos2;
+        $this->datos = json_encode($datos_array);
         $conexion = new Conexion();
         $this->db = $conexion->ConexionBD();
     }
 
     function set(){
         if ($this->db) {
-            $sql = "INSERT INTO pets (Pet_id, Datos, Datos2) VALUES (?, ?, ?)";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([$this->pet_id, $this->datos, $this->datos2]);
-            echo "Mascota guardada correctamente";
+            $sql = "INSERT INTO pets (datos) VALUES (?)";
+            $preparada = $this->db->prepare($sql);
+            $preparada->execute([$this->datos]);
+            
+            return [
+                "status" => "ok",
+                "answer" => "Se agrego correctamente",
+                "code" => 200 
+            ];
         }
         else{
-            echo"No se pudo conectar a la bd";
+            return[
+                "status" => "error",
+                "answer" => "No se pudo agregar correctamente",
+                "code" => 500 
+            ];
         }
-
     }
     
     static function get() {
@@ -34,34 +40,36 @@ class pets{
             $resultado = $db->query($sql);
             
             if ($resultado && $resultado->rowCount() > 0) {
+                $pets = [];
                 foreach ($resultado as $fila) {
-                    echo "Pet_id: {$fila['Pet_id']}";
+                    // echo "Pet_id: {$fila['Pet_id']}";
                     $datos=json_decode($fila['Datos'], true);
-                    $datos2=json_decode($fila['Datos2'], true);
-                    if ($datos){
-                        foreach ($datos as $dato){
-                            foreach($dato as $clave => $valor){
-                                echo "$clave: $valor";
-                            }
-                        }
-                    }
-                    if ($datos2){
-                        foreach ($datos2 as $dato){
-                            foreach($dato as $clave => $valor){
-                                echo "$clave: $valor";
-                            }
-                        }
+                    
+                    foreach($datos as $clave => $valor){
+                        echo "$clave: $valor";
                     }
                 }
+                return[
+                    "status" => "ok",
+                    "answer" => "Pets: $pets",
+                    "code" => 200
+                    
+                ];
             } else {
-                echo "No hay mascotas registradas";
+                return[
+                    "status" => "ok",
+                    "answer" => "No hay mascotas",
+                    "code" => 204 
+                ];
             }
         } else {
-            echo "No se pudo conectar a la BD";
+            return[
+                "status" => "error",
+                "answer" => "Error conexion",
+                "code" => 500 
+            ];
         }
     }
     
 }
 ?>
-
-

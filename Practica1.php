@@ -1,65 +1,98 @@
-<?php
-include_once("conexion.php");
-$conexion = new Conexion();
-$conexion->ConexionBD();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+</head>
+<body>
+    <h1>Formulario</h1>
+    <form action="./Practica1.php" method="POST">
+        <label>Nombre:</label>
+        <input type="text" name="name" value=""><br>
+      
+        <label>Tipo:</label>
+        <input type="text" name="type" value=""><br>
+      
+        <label>Edad:</label>
+        <input type="number" name="age" value=""><br>
+      
+        <label>Raza:</label>
+        <input type="text" name="race" value=""><br>
+      
+        <input type="submit" value="Guardar">
+      </form>
+      
+</body>
+</html>
 
-// require_once 'pets.php';
+<?php
+// $conexion = new Conexion();
+// $conexion->ConexionBD();
+
+require_once "conexion.php";
+require_once 'pets.php';
 
 // $mascota = new Pets("Max", "Perro", 3, "Labrador");
 // $mascota->set();
 
 // echo "<hr><h3>Mascotas registradas:</h3>";
 // Pets::get();
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $name = $_POST['name'] ?? '';
+    $type = $_POST['type'] ?? '';
+    $age = $_POST['age'] ?? '';
+    $race = $_POST['race'] ?? '';
+    if($name && $type && $age && $race){
+        $pet = new pets($name, $type, $age, $race);
+        $response = $pet->set();
+        echo ("$response");
+        $response = $pet->get();
+        echo ("$response");
+    }
+    else{
+        echo "Datos no enviados a formulario";
+    }
+}
+else{
+    echo ("No");
+}
 
-// -----
-require_once "conexion.php";
-require_once "pets1.php";
+// ------------- Agregar datos manualmente
+// require_once "conexion.php";
+// require_once "pets1.php";
 
-$datos1 = [ ["name" => "Galletas"] ];
-$datos2 = [ ["type" => "Gato"], ["age" => 2], ["race" => "Siames"] ];
+// $datos = [
+//     "name" => "Galletas",
+//     "type" => "Gato",
+//     "age" => 9,
+//     "race" => "Naranjoso"
+// ];
 
-$pet = new pets(1, $datos1, $datos2);
-$pet->set();
+// $pet = new pets($datos);
+// $response = $pet->set();
+// echo json_encode($response, JSON_PRETTY_PRINT);
 
-echo "Mascotas registradas: ";
-pets::get();
+// echo "Mascotas registradas ";
+// $response = pets::get();
+// echo json_encode($response, JSON_PRETTY_PRINT);
+//-----------------------------------------
+//---------------------JSON mediante la web
+// require_once "conexion.php";
+// require_once "pets.php";
 
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     $datos = $_POST['datos'];
 
-// class Pets{    
-//         public $name;
-//         public $type;
-//         public $age;
-//         public $race;
+//     $pet = new pets($datos);
+//     $response = $pet->set();
+//     echo json_encode($response, JSON_PRETTY_PRINT);
 
-
-//         function __construct($name, $type, $age, $race )
-//         {
-//             $this->name = $name;
-//             $this->type = $type;
-//             $this->age = $age;
-//             $this->race = $race;
-//         }
-//         //imprimir en otro script
-//         // respose["clave"]["valor"]
-//         function get(){
-//             // Se requiere obtener datos de la base de datos sql 
-//             $response['nombre'][] = 'ok'; // ok, error
-//             $response['raza'][]   = 'Se agrego correctamtente';
-//             return $response; 
-//         }
-
-
-//         function set($nombre, $raza){
-//            // return $this->type . "\n";
-//            // Se requiere agregar los parametros en la base de datos sql 
-//            $response['status'] = 'ok'; // ok, error
-//            $response['answer'] = 'Se agrego correctamtente';
-//            $response['code']   = 200;
-
-//            return $response;
-//         } 
-// }   
+//     $response = pets::get();
+//     echo json_encode($response, JSON_PRETTY_PRINT);
+// } else {
+//     echo "No se recibieron datos ";
+// }
 
 
 // ?>
-

@@ -1,5 +1,6 @@
 <?php
 class pets{
+    public $id;
     public $name;
     public $type;
     public $age;
@@ -19,32 +20,55 @@ class pets{
     function set(){
         if ($this->db) {
             $sql = "INSERT INTO pets (name, type, age, race) VALUES (?, ?, ?, ?)";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([$this->name, $this->type, $this->age, $this->race]);
-            echo "Mascota guardada correctamente.<br>";
+            $preparada = $this->db->prepare($sql);
+            $preparada->execute([$this->name, $this->type, $this->age, $this->race]);
+            return[
+                "status" => "ok",
+                "answer" => "Se agrego correctamente",
+                "code" => "200",
+            ];
         }
+        else{
+        return[
+            "status" => "error",
+            "answer" => "No se agrego correctamente",
+            "code" => "500",
+        ];
+    }   
+}
 
-    }
-    
-    static function get() {
-        $conexion = new Conexion();
-        $db = $conexion->ConexionBD();
-        if ($db) {
-            $sql = "SELECT * FROM pets";
-            $resultado = $db->query($sql);
-            
-            if ($resultado && $resultado->rowCount() > 0) {
-                foreach ($resultado as $fila) {
-                    echo "Nombre: {$fila['Name']} - Tipo: {$fila['Type']} - Edad: {$fila['Age']} - Raza: {$fila['Race']}<br>";
+static function get() {
+    $conexion = new Conexion();
+    $db = $conexion->ConexionBD();
+    if ($db) {
+        $sql = "SELECT * FROM pets";
+        $resultado = $db->query($sql);
+        
+        if ($resultado && $resultado->rowCount() > 0) {
+            foreach ($resultado as $fila) {
+                echo "Id: {$fila['id']} - Nombre: {$fila['Name']} - Tipo: {$fila['Type']} - Edad: {$fila['Age']} - Raza: {$fila['Race']}<br>";
+            }
+            return [
+                    "status" => "ok",
+                    "answer" => "Datos obtenidos exitosamente",
+                    "code" => "200",
+                ];
+            }
+            else {
+                return [
+                        "status" => "ok",
+                        "answer" => "Aun no hay datos",
+                        "code" => "204",
+                    ];
                 }
             } else {
-                echo "No hay mascotas registradas";
-            }
-        } else {
-            echo "No se pudo conectar a la BD";
+                return [
+                        "status" => "error",
+                        "answer" => "Error a conexión",
+                        "code" => "500",
+                    ];
         }
     }
-    
 
 }
 ?>
