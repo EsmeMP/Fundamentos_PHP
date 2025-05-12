@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Galletas",
+        "type": "Gato",
+        "age": "2",
+        "race": "Blanco"
+    },
+    {
+        "name": "Daisy",
+        "type": "Gato",
+        "age": "12",
+        "race": "Blanco"
+    },
+    {
+        "name": "Daisy",
+        "type": "Gato",
+        "age": "12",
+        "race": "Blanco"
+    },
+    {
+        "name": "Galletas",
+        "type": "Gato",
+        "age": "12",
+        "race": "Chihuahua"
+    },
+    {
+        "name": "Daisy",
+        "type": "Perro",
+        "age": "12",
+        "race": "Chihuahua"
+    },
+    {
+        "name": "Daisy",
+        "type": "Perro",
+        "age": "12",
+        "race": "Blanco"
+    },
+    {
+        "name": "Galletas",
+        "type": "Gato",
+        "age": "12",
+        "race": "Blanco"
+    },
+    {
+        "name": "Daisy",
+        "type": "Perro",
+        "age": "12",
+        "race": "Chihuahua"
+    }
+]
