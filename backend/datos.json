@@ -46,5 +46,41 @@
         "type": "Perro",
         "age": "12",
         "race": "Chihuahua"
+    },
+    {
+        "name": "Daisy",
+        "type": "Perro",
+        "age": "12",
+        "race": "Chihuahua"
+    },
+    {
+        "name": "Galletas",
+        "type": "Gato",
+        "age": "1",
+        "race": "Chihuahua"
+    },
+    {
+        "name": "Galletas",
+        "type": "Gato",
+        "age": "1",
+        "race": "Chihuahua"
+    },
+    {
+        "name": "Galletas",
+        "type": "Perro",
+        "age": "1",
+        "race": "Blanco"
+    },
+    {
+        "name": "Daisy",
+        "type": "Perro",
+        "age": "2",
+        "race": "Chihuahua"
+    },
+    {
+        "name": "Daisy",
+        "type": "Perro",
+        "age": "12",
+        "race": "Chihuahua"
     }
 ]

@@ -19,11 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "base_de_datos" => $dbResponse,
             "archivo_json"  => $jsonResponse
         ]);
-    } else {
+    }
+    else {
         header('Content-Type: application/json');
         echo json_encode(["error" => "Faltan datos en el formulario"]);
     }
-} else {
+} 
+else {
     header('Content-Type: application/json');
     echo json_encode(["error" => "No es una peticion de tipo POST"]);
 }
