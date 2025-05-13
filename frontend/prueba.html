@@ -1,0 +1,129 @@
+<form id="formMascota" class="bg-white p-4 rounded shadow-sm" method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Nombre">
+    </div>
+    <div class="mb-3">
+      <label for="type" class="form-label">Tipo</label>
+      <input type="text" class="form-control" id="type" name="type" placeholder="Tipo">
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label">Edad</label>
+      <input type="number" class="form-control" id="age" name="age" placeholder="Edad">
+    </div>
+    <div class="mb-3">
+      <label for="race" class="form-label">Raza</label>
+      <input type="text" class="form-control" id="race" name="race" placeholder="Raza">
+    </div>
+    <!-- Botón con onclick -->
+    <button type="button" class="btn btn-primary w-100" onclick="enviarMascotas()">Enviar</button>
+  </form>
+  
+  <script>
+    function cargarMascotas() {
+    const contenedor = document.getElementById('listaMascotas');
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "../backend/get_mascotas.php", true);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // Primero parseamos la respuesta JSON
+            const datos = JSON.parse(xhr.responseText);
+            console.log(datos); // Opcional, para revisar en consola
+
+            // Verificamos que tenga la estructura esperada
+            if (datos.data && Array.isArray(datos.data)) {
+                // Limpiamos antes de agregar
+                contenedor.innerHTML = "";
+
+                // Creamos las etiquetas con los datos
+                datos.data.forEach(m => {
+                    const div = document.createElement('div');
+                    div.className = 'card mb-2 p-2';
+                    div.innerHTML = `
+                        <div><strong>ID:</strong> ${m.id}</div>
+                        <div><strong>Nombre:</strong> ${m.name}</div>
+                        <div><strong>Tipo:</strong> ${m.type}</div>
+                        <div><strong>Edad:</strong> ${m.age} años</div>
+                        <div><strong>Raza:</strong> ${m.race}</div>
+                    `;
+                    contenedor.appendChild(div);
+                });
+            } else {
+                console.warn("No se recibieron datos válidos");
+            }
+        } else {
+            console.error("Error en la solicitud:", xhr.status);
+        }
+    };
+
+    xhr.send(); // Esto solo envía, no devuelve la respuesta directamente
+}
+
+
+  </script>
+  
+  <script>
+    function cargarMascotas() {
+    // 1. Obtenemos el contenedor donde se van a mostrar las mascotas
+    var contenedor = document.getElementById('listaMascotas');
+
+    // 2. Creamos una nueva solicitud HTTP
+    var xhr = new XMLHttpRequest();
+
+    // 3. Configuramos la solicitud: método GET y la URL del archivo PHP
+    xhr.open("GET", "../backend/get_mascotas.php", true);
+
+    // 4. Le decimos qué hacer cuando la solicitud haya terminado
+    xhr.onload = function() {
+        // 5. Verificamos si la respuesta fue exitosa (código 200)
+        if (xhr.status === 200) {
+            // 6. Mostramos la respuesta en la consola para ver qué llegó
+            console.log(xhr.responseText);
+
+            // 7. Convertimos el texto JSON en un objeto de JavaScript
+            var respuesta = JSON.parse(xhr.responseText);
+
+            // 8. Revisamos si la respuesta tiene una lista de mascotas en 'data'
+            if (respuesta.data && Array.isArray(respuesta.data)) {
+
+                // 9. Limpiamos el contenedor antes de agregar nuevos datos
+                contenedor.innerHTML = "";
+
+                // 10. Recorremos cada mascota y creamos una tarjeta con sus datos
+                for (var i = 0; i < respuesta.data.length; i++) {
+                    var mascota = respuesta.data[i];
+
+                    // Creamos un nuevo div
+                    var div = document.createElement('div');
+                    div.className = 'card mb-2 p-2';
+
+                    // Le agregamos contenido HTML con los datos de la mascota
+                    div.innerHTML =
+                        "<div><strong>ID:</strong> " + mascota.id + "</div>" +
+                        "<div><strong>Nombre:</strong> " + mascota.name + "</div>" +
+                        "<div><strong>Tipo:</strong> " + mascota.type + "</div>" +
+                        "<div><strong>Edad:</strong> " + mascota.age + " años</div>" +
+                        "<div><strong>Raza:</strong> " + mascota.race + "</div>";
+
+                    // Agregamos ese div al contenedor
+                    contenedor.appendChild(div);
+                }
+
+            } else {
+                // Si no vienen datos válidos
+                contenedor.innerHTML = "No hay mascotas registradas.";
+            }
+        } else {
+            // Si hubo un error en la solicitud
+            console.error("Error al obtener los datos. Código: " + xhr.status);
+            contenedor.innerHTML = "Ocurrió un error al cargar las mascotas.";
+        }
+    };
+
+    // 11. Enviamos la solicitud
+    xhr.send();
+}
+
+  </script>

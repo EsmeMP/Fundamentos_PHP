@@ -6,3 +6,4 @@ header('Content-Type: application/json');
 
 $response = Pets::get();
 echo json_encode($response);
+?>

@@ -22,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     else {
         header('Content-Type: application/json');
-        echo json_encode(["error" => "Faltan datos en el formulario"]);
+        echo json_encode(["error" => "faltan datos en el formulario"]);
     }
 } 
 else {
     header('Content-Type: application/json');
-    echo json_encode(["error" => "No es una peticion de tipo POST"]);
+    echo json_encode(["error" => "no es una peticion de tipo POST"]);
 }
 
 

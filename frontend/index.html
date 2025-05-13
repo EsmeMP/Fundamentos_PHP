@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Formulario</h1>
+        <form id="formMascota" class="bg-white p-4 rounded shadow-sm" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre">
+            </div>
+            <div class="mb-3">
+                <label for="type" class="form-label">Tipo</label>
+                <input type="text" class="form-control" id="type" name="type" placeholder="Tipo">
+            </div>
+            <div class="mb-3">
+                <label for="age" class="form-label">Edad</label>
+                <input type="number" class="form-control" id="age" name="age" placeholder="Edad">
+            </div>
+            <div class="mb-3">
+                <label for="race" class="form-label">Raza</label>
+                <input type="text" class="form-control" id="race" name="race" placeholder="Raza">
+            </div>
+            <button type="button" class="btn btn-primary w-100" onclick="enviarMascotas()">Enviar</button>
+        </form>
+        
+        <h2 class="mt-5">Lista de Mascotas:</h2>
+        <div id="listaMascotas" class="mt-3">
+            <!-- <button type="button" class="btn btn-primary w-100" onclick="cargarMascotas()">Ver</button> -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // document.getElementById('formMascota').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        
+        //     const formData = new FormData(this);
+        
+        //     //fetch es una funcion que permite hacer solicitudes http de manera asincrona
+        //     fetch('../backend/Practica1.php', {
+        //         method: 'POST',
+        //         body: formData
+        //     })
+        //     // convertir de JSON  a OBJ de JS
+        //     .then(res => res.json())
+        //     //ver en consola la bd y el json
+        //     .then(data => {
+        //         console.log(data);
+        //         if (data.base_de_datos) {
+        //             console.log("Base de datos:", data.base_de_datos);
+        //         }
+
+        //         if (data.archivo_json) {
+        //             console.log("Archivo JSON:", data.archivo_json);
+        //         }
+        //         console.log(data);
+        //         alert(data.base_de_datos?.answer || data.error);
+        //         cargarMascotas();
+        //     })
+        //     .catch(err => console.error("Error:", err));
+        // });
+        function enviarMascotas(){
+            const form = document.getElementById('formMascota');
+            // let name = form.name.value;
+            // let type = form.type.value;
+            // let age = form.age.value;
+            // let race = form.race.value;
+            // const formData = new FormData(form);
+            let formData = new FormData(form);
+            
+            // let datos = "name=" + (name) + "&type=" + (type) + "&age=" + (age) +"&race=" + (race);
+            // XMLHttpRequest
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "../backend/Practica1.php", true);
+            // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onload = function(){
+                if(xhr.status === 200) {
+                    console.log (xhr.responseText)
+                    cargarMascotas();
+                    form.reset();
+                }
+                else{
+                    console.log("Error")
+                }
+            }
+            xhr.send(formData);
+        }
+        
+        
+
+
+        function cargarMascotas() {
+            const contenedor = document.getElementById('listaMascotas') 
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "../backend/get_mascotas.php", true)
+            xhr.onload = function(){
+                if(xhr.status === 200){
+                    console.log(xhr.responseText);
+                    //Parsear = convertir
+                    let lista = JSON.parse(xhr.responseText)
+                    if(lista.data){
+                        contenedor.innerHTML = "";
+                        for(let i = 0; i< lista.data.length; i++){
+                            let mascota = lista.data[i];
+                            let div = document.createElement('div')
+                            div.className = 'card mb-2 p-2';
+
+                            div.innerHTML = `
+                            <div><strong>ID:</strong> ${mascota.id}</div>
+                            <div><strong>Nombre:</strong> ${mascota.name}</div>
+                            <div><strong>Tipo:</strong> ${mascota.type}</div>
+                            <div><strong>Edad:</strong> ${mascota.age} años</div>
+                            <div><strong>Raza:</strong> ${mascota.race}</div>
+                            `;
+                            contenedor.appendChild(div);
+                        }
+                    } 
+                    else{
+                        contenedor.innerHTML= "No hay mascotas"
+                    }
+                }
+                else {
+                    console.error("Error", xhr.status )
+                }
+            }
+            datos = xhr.send();
+            
+            // fetch('../backend/get_mascotas.php')  
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         const contenedor = document.getElementById('listaMascotas');
+            //         contenedor.innerHTML = ''; 
+
+            //         if (data.data.length === 0) {
+            //             contenedor.innerHTML = '<p>No hay mascotas registradas.</p>';
+            //         } else {
+            //             data.data.forEach(m => {
+            //             const div = document.createElement('div');
+            //             div.className = 'card mb-2 p-2'; 
+            //             div.innerHTML = `
+            //                 <div><strong>ID:</strong> ${m.id}</div>
+            //                 <div><strong>Nombre:</strong> ${m.name}</div>
+            //                 <div><strong>Tipo:</strong> ${m.type}</div>
+            //                 <div><strong>Edad:</strong> ${m.age} años</div>
+            //                 <div><strong>Raza:</strong> ${m.race}</div>
+            //             `;
+            //             contenedor.appendChild(div);
+            //         });
+
+            //         }
+            //     })
+            //     .catch(err => console.error("Error al cargar mascotas: ", err));
+        }
+        //mandar a traer la funcion sin necesidad de hacer una peticion
+        window.onload = function() {
+            cargarMascotas();
+        }
+    </script>
+</body>
+</html>
+
+<!-- function enviar formulario mediante onclick, por eventos no  -->
+ 
