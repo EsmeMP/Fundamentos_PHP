@@ -2032,5 +2032,17 @@
         "type": "Perro",
         "age": "12",
         "race": "Blanco"
+    },
+    {
+        "name": "Daisy",
+        "type": "Perro",
+        "age": "12",
+        "race": "Chihuahua"
+    },
+    {
+        "name": "Galletas",
+        "type": "Perro",
+        "age": "12",
+        "race": "Chihuahua"
     }
 ]

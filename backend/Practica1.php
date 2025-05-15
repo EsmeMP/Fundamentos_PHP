@@ -1,12 +1,13 @@
 <?php
 require_once "conexion.php";
 require_once "pets.php";
+require_once "jwt.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'] ?? '';
-    $type = $_POST['type'] ?? '';
-    $age  = $_POST['age'] ?? '';
-    $race = $_POST['race'] ?? '';
+    $name = $_POST['name'];
+    $type = $_POST['type'];
+    $age  = $_POST['age'];
+    $race = $_POST['race'];
 
     if ($name && $type && $age && $race) {
         $pet = new Pets($name, $type, $age, $race);

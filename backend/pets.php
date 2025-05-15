@@ -1,4 +1,5 @@
 <?php
+// jwt
 class pets{
     public $id;
     public $name;
@@ -67,7 +68,7 @@ static function get() {
                 "status" => "ok",
                 "answer" => "Aún no hay datos",
                 "code" => "204",
-                "data" => []
+                // "data" => []
             ];
         }
     } else {
@@ -75,7 +76,7 @@ static function get() {
             "status" => "error",
             "answer" => "Error de conexión",
             "code" => "500",
-            "data" => []
+            // "data" => []
         ];
     }
 }
