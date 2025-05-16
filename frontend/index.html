@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body class="bg-light class mt-5">
     <!-- <div class="container mb-4">
@@ -43,70 +44,136 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <script>    
+        // function enviarMascotas(){
+        //     const form = document.getElementById('formMascota');
+            
+        //     let formData = new FormData(form);
+            
+        //     let xhr = new XMLHttpRequest();
+        //     xhr.open("POST", "../backend/Practica1.php", true);
+        //     xhr.onload = function(){
+        //         if(xhr.status === 200) {
+        //             console.log (xhr.responseText)
+        //             cargarMascotas();
+        //             form.reset();
+        //         }
+        //         else{
+        //             console.log("Error")
+        //         }
+        //     }
+        //     xhr.send(formData);
+        // }
         function enviarMascotas(){
-            const form = document.getElementById('formMascota');
-            
+            let form = $('#formMascota')[0];
             let formData = new FormData(form);
-            
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", "../backend/Practica1.php", true);
-            xhr.onload = function(){
-                if(xhr.status === 200) {
-                    console.log (xhr.responseText)
+
+            $.ajax({
+                url: "../backend/Practica1.php",
+                type:"POST",
+                data: formData,
+                contentType: false,
+                processData: false, 
+                success: function(response){
+                    console.log(response);
                     cargarMascotas();
                     form.reset();
+                },
+                error: function(xhr, status, error, response){
+                    console.log("Error");
                 }
-                else{
-                    console.log("Error")
-                }
-            }
-            xhr.send(formData);
+            })
+            
         }
 
 
         function cargarMascotas() {
-            const contenedor = document.getElementById('listaMascotas') 
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", "../backend/get_mascotas.php", true)
-            xhr.onload = function(){
-                if(xhr.status === 200){
-                    console.log(xhr.responseText);
-                    //Parsear = convertir
-                    let lista = JSON.parse(xhr.responseText)
+            // const contendor = $('#listaMascotas')[0];
+            const contenedor = document.getElementById('listaMascotas');
+            $.ajax({
+                url: "../backend/get_mascotas.php",
+                type: "POST",
+                dataType: "json",
+                beforeSend: function(xhr){
+                    console.log("Cargando...")
+                },
+                // contentType: false,
+                // processData: false,
+                // data: data,
+                success: function (lista){
+
+                    contenedor.innerHTML = "";
+                    // let lista = JSON.parse(response);
                     if(lista.data){
-                        contenedor.innerHTML = "";
-                        for(let i = 0; i< lista.data.length; i++){
-                            let mascota = lista.data[i];
-                            let div = document.createElement('div')
-                            div.className = 'card mb-2 p-2';
-                            
-                            div.innerHTML = `
-                            <div><strong>ID:</strong> ${mascota.id}</div>
-                            <div><strong>Nombre:</strong> ${mascota.name}</div>
-                            <div><strong>Tipo:</strong> ${mascota.type}</div>
-                            <div><strong>Edad:</strong> ${mascota.age} años</div>
-                            <div><strong>Raza:</strong> ${mascota.race}</div>
-                            `;
-                            contenedor.appendChild(div);
-                        }
-                    } 
+                    for(let i = 0; i < lista.data.length; i++){
+                        let mascota = lista.data[i];
+                        let div = document.createElement('div');
+                        div.className = 'card mb-2 p-2';
+                        div.innerHTML = `
+                        <div><strong>ID:</strong> ${mascota.id}</div>
+                        <div><strong>Nombre:</strong> ${mascota.name}</div>
+                        <div><strong>Tipo:</strong> ${mascota.type}</div>
+                        <div><strong>Edad:</strong> ${mascota.age}</div>
+                        <div><strong>Raza:</strong> ${mascota.race}</div>
+                        `;
+                        contenedor.appendChild(div);
+                        console.log(lista)
+                    }}
                     else{
-                        contenedor.innerHTML= "No hay mascotas"
+                        console.log("Error", lista)
                     }
+                },
+                error: function(xhr,status,error,lista){
+                    console.error(error)
                 }
-                else {
-                    console.error("Error", xhr.status )
-                }
-            }
-            datos = xhr.send();
+            });
+            // const contenedor = document.getElementById('listaMascotas') 
+            // let xhr = new XMLHttpRequest();
+            // xhr.open("POST", "../backend/get_mascotas.php", true)
+            // xhr.onload = function(){
+            //     if(xhr.status === 200){
+            //         console.log(xhr.responseText);
+            //         //Parsear = convertir
+            //         let lista = JSON.parse(xhr.responseText)
+            //         if(lista.data){
+            //             contenedor.innerHTML = "";
+            //             for(let i = 0; i< lista.data.length; i++){
+            //                 let mascota = lista.data[i];
+            //                 let div = document.createElement('div')
+            //                 div.className = 'card mb-2 p-2';
+                            
+            //                 div.innerHTML = `
+            //                 <div><strong>ID:</strong> ${mascota.id}</div>
+            //                 <div><strong>Nombre:</strong> ${mascota.name}</div>
+            //                 <div><strong>Tipo:</strong> ${mascota.type}</div>
+            //                 <div><strong>Edad:</strong> ${mascota.age} años</div>
+            //                 <div><strong>Raza:</strong> ${mascota.race}</div>
+            //                 `;
+            //                 contenedor.appendChild(div);
+            //             }
+            //         } 
+            //         else{
+            //             contenedor.innerHTML= "No hay mascotas"
+            //         }
+            //     }
+            //     else {
+            //         console.error("Error", xhr.status )
+            //     }
+            // }
+            // datos = xhr.send();
         }
         //mandar a traer la funcion sin necesidad de hacer una peticion
         window.onload = function() {
             cargarMascotas();
         }
-        </script>
-        <script src="./js/index.mjs"></script> 
+        $(document).ready(function() {
+        console.log("jQuery funciona en este archivo");
+    });
+    </script>
+        <!-- <script src="./js/jquery.js"></script>  -->
+         
+
+        
 </body>
 </html>
 

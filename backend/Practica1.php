@@ -1,7 +1,6 @@
 <?php
 require_once "conexion.php";
 require_once "pets.php";
-require_once "jwt.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
